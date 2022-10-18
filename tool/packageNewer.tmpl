@@ -1,0 +1,12 @@
+package {{.PackageNameLower}}
+
+import "github.com/juanjiTech/coding-open-api-sdk/config"
+
+type {{.PackageName}} struct {
+	c *config.Basic
+}
+
+// New 新建{{.PackageDesc}}相关函数
+func New(c *config.Basic) {{.PackageName}} {
+	return {{.PackageName}}{c}
+}

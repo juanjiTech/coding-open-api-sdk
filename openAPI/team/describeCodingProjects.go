@@ -1,6 +1,8 @@
 package team
 
-import "github.com/guonaihong/gout"
+import (
+	"github.com/juanjiTech/coding-open-api-sdk/openAPI/poster"
+)
 
 type DescribeCodingProjectsReq struct {
 	Action      string `json:"Action"`
@@ -40,7 +42,7 @@ type DescribeCodingProjectsResp struct {
 }
 
 // DescribeCodingProjects 查询团队内所有项目列表
-func (Team) DescribeCodingProjects(PageNumber, PageSize int, ProjectName ...string) (resp DescribeCodingProjectsResp, err error) {
+func (t *Team) DescribeCodingProjects(PageNumber, PageSize int, ProjectName ...string) (resp DescribeCodingProjectsResp, err error) {
 	req := DescribeCodingProjectsReq{
 		Action:     "DescribeCodingProjects",
 		PageNumber: PageNumber,
@@ -49,9 +51,6 @@ func (Team) DescribeCodingProjects(PageNumber, PageSize int, ProjectName ...stri
 	if len(ProjectName) > 0 {
 		req.ProjectName = ProjectName[0]
 	}
-	err = gout.POST("https://e.coding.net/open-api?Action=DescribeCodingProjects").
-		SetJSON(req).
-		BindJSON(&resp).
-		Do()
+	err = poster.Post(t.c, req.Action, req, &resp)
 	return
 }

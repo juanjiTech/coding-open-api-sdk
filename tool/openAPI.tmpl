@@ -1,0 +1,23 @@
+package openAPI
+
+import (
+	"github.com/juanjiTech/coding-open-api-sdk/config"
+	{{- range $index, $info := .Info}}
+    "github.com/juanjiTech/coding-open-api-sdk/openAPI/{{$info.PackageNameLower}}" // {{$info.PackageDesc}}
+    {{- end}}
+)
+
+type OpenAPI struct {
+	c    *config.Basic
+	{{- range $index, $info := .Info}}
+    {{$info.PackageName}} {{$info.PackageNameLower}}.{{$info.PackageName}} // {{$info.PackageDesc}}
+    {{- end}}
+}
+
+func New(c *config.Basic) OpenAPI {
+	return OpenAPI{c,
+	    {{- range $index, $info := .Info}}
+        {{$info.PackageNameLower}}.New(c),
+        {{- end}}
+	}
+}

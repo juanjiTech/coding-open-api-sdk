@@ -1,0 +1,19 @@
+package {{.PackageNameLower}}
+
+import "github.com/juanjiTech/coding-open-api-sdk/openAPI/poster"
+
+{{.ReqStruct}}
+{{if .RespStruct -}}
+{{.RespStruct}}
+{{end -}}
+// {{.ActionName}} {{.ActionDesc}}
+{{if .RespStruct -}}
+func ({{.PackageNameShort}} *{{.PackageName}}) {{.ActionName}}(req *{{.ActionName}}Req) (resp {{.ActionName}}Resp, err error) {
+	err = poster.Post({{.PackageNameShort}}.c, "{{.ActionName}}", req, &resp)
+	return
+}
+{{- else -}}
+func ({{.PackageNameShort}} *{{.PackageName}}) {{.ActionName}}(req *{{.ActionName}}Req) error {
+	return poster.Post({{.PackageNameShort}}.c, "{{.ActionName}}", req, nil)
+}
+{{- end}}
